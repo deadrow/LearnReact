@@ -1,27 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import TodoItem from "./TodoItem";
 
-import "./style.css"
+import { TodoStoreImpl } from "../../store/TodoStore";
 
-interface ITodoItem {
-    id : number;
-    title : string;
-}
+
+import "./style.css"
+import { observer } from "mobx-react-lite";
 
 interface TodoProps {
-    items : ITodoItem[];
+    todoStore : TodoStoreImpl;
 }
 
-const Todo : React.FC<TodoProps> = (props) => {
+const Todo : React.FC<TodoProps> = ({todoStore}) => {
+
+    const [value, setValue] = useState<string>('');
+
     return(
         <div className="todo-container">
+            <input value={value} type="text" onChange={(e) => {setValue(e.target.value)}} />
+            <button onClick={() => {todoStore.addTodo(value)}} > Add </button>
+
             <ol>
                 {
-                    props.items.map(item => <TodoItem key={item.id} title={item.title}/>)
+                    todoStore.todos.map(item => <TodoItem key={item.id} id={item.id} title={item.title} completed={item.completed} store={todoStore}/>)
                 }
             </ol>
         </div>
     )
-}
+};
 
-export default Todo
+export default observer(Todo);

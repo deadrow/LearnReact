@@ -4,3 +4,13 @@ li {
     border-radius: 10px;
     margin-top: 10px;
 }
+
+.check {
+    display: inline-block;
+    transform: rotate(45deg);
+    height: 12px;
+    width: 6px;
+    margin-left: 1%; 
+    border-bottom: 5px solid #78b13f;
+    border-right: 5px solid #78b13f;
+  }
